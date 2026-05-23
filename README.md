@@ -156,7 +156,7 @@ sdcrename=false
 
 2) Use it in the command line directly or via Windows batch scripts.
 
-    - When using the command line for either executable, it does not load or rely on the configuration `.ini` file and instead operates entirely from the provided command-line parameters.
+    - When using the command line for either executable, it does not load or rely on the configuration `.ini` file and instead operates entirely from the provided command-line parameters. If certian parameters are not set it will use default values which can seen above in the configurion `.ini` comments.
 
 ```
   PSHomeCryptoBruteforce.exe [files/folders...]
