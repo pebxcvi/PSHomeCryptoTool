@@ -52,6 +52,8 @@ The PlayStation®Home Crypto Tool is split into two executables :
     - This is the encrypter that encrypts the files using their SHA1 Hashes.
       
     - For the HCDB Object Catalogues, it will automatically compress the SQLite databases before encryption and if already compressed, skip and continue on to encryption. The compression is a C# reimplementation of a LMZA Segs Compressor sample found in one of Sony's PS3 SDKs that heavily utilizes 7-Zip's LMZA C# Library. That can be found here -> https://huggingface.co/datasets/pebxcvi/PSHomeCacheDepot/resolve/main/DEV/lzma-segcomp-sample.exe
+  
+...
 
 For more information on the types of encryption -> https://github.com/pebxcvi/PSHomeCacheExtractor/tree/main#encryption-overview
 
