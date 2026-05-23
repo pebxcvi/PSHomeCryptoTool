@@ -197,7 +197,7 @@ sdcrename=false
 The PlayStation®Home Crypto Tool uses Net 6 
 - https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.428-windows-x64-installer
 
-... and utilities the following Github repositories :
+... and utilizes the following Github repositories :
 
 NautilusXP2024 -> https://github.com/GitHubProUser67/NautilusXP2024 
 - The C# found in ```/src/PSHomeCryptoTool/``` comes directly from there. 
