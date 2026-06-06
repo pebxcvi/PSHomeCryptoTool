@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-// -- DEFINF2.0 --
+// -- DEINF2.0 --
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
@@ -9,7 +9,7 @@ using Org.BouncyCastle.Security;
 public static class ToolsImplementation
 {
 
-    // -- DEFINF2.0 --
+    // -- DEINF2.0 --
     public static readonly byte[] MetaDataV1Key = new byte[32]
     {
         0x8B, 0x41, 0xA7, 0xDE, 0x47, 0xA0, 0xD4, 0x45,
