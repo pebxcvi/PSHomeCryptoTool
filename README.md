@@ -3,7 +3,7 @@
 ...
 
 > [!IMPORTANT]
-> Download Release -> https://github.com/pebxcvi/PSHomeCryptoTool/releases/tag/V1.0
+> Download Release -> https://github.com/pebxcvi/PSHomeCryptoTool/releases/tag/V2.0
 
 ...
 
