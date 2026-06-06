@@ -41,7 +41,7 @@ https://github.com/pebxcvi/PSHomeCacheExtractor/tree/main#cache-breakdown
 
 ## Usage
 
-The PlayStation®Home Crypto Tool is split into two executables :
+The PlayStation®Home Crypto Tool is split into three executables :
 
 1) PSHomeCryptoBruteforce.exe
     - This is the decrypter but technically is a bruteforcer since the SHA1 hashes of the files are unknown. It utilizes a custom method found within ```/src/PSHomeCryptoTool/CTRExploitProcess.cs``` that makes bruteforcing a breeze.
@@ -52,7 +52,11 @@ The PlayStation®Home Crypto Tool is split into two executables :
     - This is the encrypter that encrypts the files using their SHA1 Hashes.
       
     - For the HCDB Object Catalogues, it will automatically compress the SQLite databases before encryption and if already compressed, skip and continue on to encryption. The compression is a C# reimplementation of a LMZA Segs Compressor sample found in one of Sony's PS3 SDKs that heavily utilizes 7-Zip's LMZA C# Library. That can be found here -> https://huggingface.co/datasets/pebxcvi/PSHomeCacheDepot/resolve/main/DEV/lzma-segcomp-sample.exe
-  
+      
+2) PSHomeDEINF2.0.exe
+    - This is an independent INF file logger, initially used in PSHomeCacheExtractor. It decrypts INF files ( where necessary; some are already decrypted ) then logs the stored path and date.
+    - In PlayStation®Home data caches, each data file has an associated INF file of the same name that contains the data file's original CDN path, file name, and, in many cases, a date.
+
 ...
 
 For more information on the types of encryption -> https://github.com/pebxcvi/PSHomeCacheExtractor/tree/main#encryption-overview
@@ -153,6 +157,38 @@ odcrename=false
 sdcrename=false
   - Restructures SDC files with the format (beta)$live(2)$SceneName$SceneFileName.sdc to CDN structure.
   ```
+**config-deinf.ini**
+```
+pauseonexit=true
+   - Pauses before closing.
+recursive=true
+   - Searches dropped folders recursively.
+loginfo=true
+   - Creates INF log output.
+defaultlogfile=log.txt
+   - Used when the dropped folder/file is not named CACHE.
+   - Takes full or relative path of file.
+cachelogoutputfolder=INFLOGS
+   - Used when the dropped folder is named CACHE.
+   - Takes full or relative path of folder.
+   - Creates separate logs into cachelogoutputfolder based on the subfolders :
+       CLANS
+       GLOBALS
+       HTTP
+       OBJECTDEFS
+       OBJECTDYNAMIC
+       OBJECTTHUMBS
+       PROFILE
+       SCENES
+       VIDEO
+       WORLDMAP
+savefiles=false
+   - Saves decrypted INF files.
+fileoutputfolder=DECRYPTED
+   - Output folder used only when savefiles=true.
+   - Takes full or relative path of folder.
+   - Preserves the dropped folder structure.
+```
 
 ### Command Line
 
@@ -161,36 +197,50 @@ sdcrename=false
     - When using the command line for either executable, it does not load or rely on the configuration `.ini` file and instead operates entirely from the provided command-line parameters. If certian parameters are not set it will use default values which can be seen above in the configurion `.ini` comments.
 
 ```
-  PSHomeCryptoBruteforce.exe [files/folders...]
-      [-outputpath PATH]
-      [-debug]
-      [-threads -1|0|1+]
-      [-cdnmode 0|1|2]
-      [-pause|-nopause]
-      [-cleanfolders|-nocleanfolders]
-      [-sha1log|-nosha1log]
-      [-appendsha1|-noappendsha1]
-      [-odcrename|-noodcrename]
-      [-sdcrename|-nosdcrename]
-      [-hcdbbruteforceshortcut|-nohcdbbruteforceshortcut]
-      [-hcdbdecompress|-nohcdbdecompress]
-      [-hcdbbruteforcetimeout SECONDS]
+PSHomeCryptoBruteforce.exe [files/folders...]
+  [-outputpath PATH]
+  [-debug]
+  [-threads -2|-1|0|1|2+]
+  [-cdnmode 0|1|2]
+  [-pause|-nopause]
+  [-cleanfolders|-nocleanfolders]
+  [-sha1log|-nosha1log]
+  [-appendsha1|-noappendsha1]
+  [-odcrename|-noodcrename]
+  [-sdcrename|-nosdcrename]
+  [-hcdbbruteforceshortcut|-nohcdbbruteforceshortcut]
+  [-hcdbdecompress|-nohcdbdecompress]
+  [-hcdbbruteforcetimeout SECONDS]
 ```
 ```
-  PSHomeCryptoEncrypt.exe [files/folders...]
-      [-outputpath PATH]
-      [-debug]
-      [-threads -2|-1|0|1+]
-      [-sha1 HEX]
-      [-hcdbdecompress|-nohcdbdecompress]
-      [-hcdbcompresslevel N]
-      [-hcdbcompressmaxsize N]
-      [-cdnmode 0|1|2]
-      [-pause|-nopause]
-      [-cleanfolders|-nocleanfolders]
-      [-sha1log]
-      [-odcrename|-noodcrename]
-      [-sdcrename|-nosdcrename]
+PSHomeCryptoEncrypt.exe [files/folders...]
+  [-outputpath PATH]
+  [-debug]
+  [-threads -2|-1|0|1|2+]
+  [-sha1 HEX]
+  [-hcdbdecompress|-nohcdbdecompress]
+  [-hcdbcompresslevel N]
+  [-hcdbcompressmaxsize N]
+  [-cdnmode 0|1|2]
+  [-pause|-nopause]
+  [-cleanfolders|-nocleanfolders]
+  [-sha1log]
+  [-odcrename|-noodcrename]
+  [-sdcrename|-nosdcrename]
+```
+```
+PSHomeDEINF2.0.exe <file-or-folder> [-l] [-lo logFilePath] [-s] [-fo decryptedOutputFolder]
+  -l         Log INF file info
+  -lo PATH   Output log file path (optional, default is log.txt in current folder)
+  -s         Save decrypted INF files
+  -fo PATH   Output folder for decrypted files (optional, default is DECRYPTED)
+
+Examples:
+  PSHomeDEINF2.0.exe inputDir -l
+  PSHomeDEINF2.0.exe inputDir -s
+  PSHomeDEINF2.0.exe inputDir -l -lo C:\out\log.txt
+  PSHomeDEINF2.0.exe inputDir -s -fo C:\out\decrypted
+  PSHomeDEINF2.0.exe inputDir -l -s -lo log.txt -fo DECRYPTED
 ```
 ## Components
 
@@ -205,8 +255,13 @@ NautilusXP2024 -> https://github.com/GitHubProUser67/NautilusXP2024
 BouncyCastle -> https://github.com/bcgit/bc-csharp
 
 SharpCompress -> https://github.com/adamhathcock/sharpcompress
-
+- Used only in `LZMASegsDecompressor.cs`
+  
 7-Zip LZMA-SDK -> https://github.com/welovegit/LZMA-SDK
+- Used only in `LZMASegsCompressor.cs`
+
+ShellProgressBar -> https://github.com/Mpdreamz/shellprogressbar 
+- Used only in `PSHomeDEINF2.0`
 
 ## Mentions
 
