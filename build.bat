@@ -12,6 +12,7 @@ set "TFM=net6.0"
 
 set "ENC_BIN=%ROOT%\src\PSHomeCryptoEncrypt\bin\%CFG%\%TFM%"
 set "BRUTE_BIN=%ROOT%\src\PSHomeCryptoBruteforce\bin\%CFG%\%TFM%"
+set "DEINF_BIN=%ROOT%\src\PSHomeDEINF2.0\bin\%CFG%\%TFM%"
 
 echo Checking for .NET 6 SDK...
 dotnet --list-sdks | findstr /B /C:"6." >nul
@@ -66,6 +67,13 @@ if not exist "%BRUTE_BIN%" (
     exit /b 1
 )
 
+if not exist "%DEINF_BIN%" (
+    echo DEINF build output folder not found:
+    echo %DEINF_BIN%
+    pause
+    exit /b 1
+)
+
 echo.
 echo Copying Encrypt output...
 xcopy "%ENC_BIN%\*" "%OUTROOT%\" /e /i /y >nul
@@ -83,12 +91,32 @@ if errorlevel 1 (
     exit /b 1
 )
 
+echo Copying DEINF output...
+xcopy "%DEINF_BIN%\*" "%OUTROOT%\" /e /i /y >nul
+if errorlevel 1 (
+    echo Failed copying DEINF output.
+    pause
+    exit /b 1
+)
+
 echo.
 echo Done.
 echo.
 
 IF EXIST "%ROOT%\src\build" ROBOCOPY "%ROOT%\src\build" "%ROOT%" /S /MOVE /XF *.pdb >NUL
 IF EXIST "%ROOT%\src\build" RMDIR /S /Q "%ROOT%\src\build"
+
+IF EXIST "%ROOT%\src\PSHomeCryptoTool\bin" RMDIR /S /Q "%ROOT%\src\PSHomeCryptoTool\bin"
+IF EXIST "%ROOT%\src\PSHomeCryptoTool\obj" RMDIR /S /Q "%ROOT%\src\PSHomeCryptoTool\obj"
+
+IF EXIST "%ROOT%\src\PSHomeCryptoEncrypt\bin" RMDIR /S /Q "%ROOT%\src\PSHomeCryptoEncrypt\bin"
+IF EXIST "%ROOT%\src\PSHomeCryptoEncrypt\obj" RMDIR /S /Q "%ROOT%\src\PSHomeCryptoEncrypt\obj"
+
+IF EXIST "%ROOT%\src\PSHomeCryptoBruteforce\bin" RMDIR /S /Q "%ROOT%\src\PSHomeCryptoBruteforce\bin"
+IF EXIST "%ROOT%\src\PSHomeCryptoBruteforce\obj" RMDIR /S /Q "%ROOT%\src\PSHomeCryptoBruteforce\obj"
+
+IF EXIST "%ROOT%\src\PSHomeDEINF2.0\bin" RMDIR /S /Q "%ROOT%\src\PSHomeDEINF2.0\bin"
+IF EXIST "%ROOT%\src\PSHomeDEINF2.0\obj" RMDIR /S /Q "%ROOT%\src\PSHomeDEINF2.0\obj"
 
 :END
 

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSHomeCryptoEncrypt", "PSHo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSHomeCryptoBruteforce", "PSHomeCryptoBruteforce\PSHomeCryptoBruteforce.csproj", "{97891BF8-28A3-4859-B92D-2C315E4F6A6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSHomeDEINF2.0", "PSHomeDEINF2.0\PSHomeDEINF2.0.csproj", "{EEB15BE9-6A06-42AD-9B85-A9CB6A71482F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{97891BF8-28A3-4859-B92D-2C315E4F6A6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97891BF8-28A3-4859-B92D-2C315E4F6A6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97891BF8-28A3-4859-B92D-2C315E4F6A6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB15BE9-6A06-42AD-9B85-A9CB6A71482F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB15BE9-6A06-42AD-9B85-A9CB6A71482F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB15BE9-6A06-42AD-9B85-A9CB6A71482F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB15BE9-6A06-42AD-9B85-A9CB6A71482F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
