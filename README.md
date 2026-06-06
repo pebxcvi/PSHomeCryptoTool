@@ -55,6 +55,7 @@ The PlayStation®Home Crypto Tool is split into three executables :
       
 2) PSHomeDEINF2.0.exe
     - This is an independent INF file logger, initially used in PSHomeCacheExtractor. It decrypts INF files ( where necessary; some are already decrypted ) then logs the stored path and date.
+      
     - In PlayStation®Home data caches, each data file has an associated INF file of the same name that contains the data file's original CDN path, file name, and, in many cases, a date.
 
 ...
